@@ -2,6 +2,7 @@ package com.user.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,15 +75,51 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User updateUser(int userId) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+	public User updateUser(int userId,User user) throws UserException {
+		
+		Optional<User> update = userDao.findById(userId);
+		
+		if(update.isPresent()) {
+			
+			User up =  update.get();
+			
+			up.setFirstName(user.getFirstName());
+			up.setLastName(user.getLastName());
+			up.setEmail(user.getEmail());
+			up.setAge(user.getAge());
+			up.setGender(user.getGender());
+			up.setPassword(user.getPassword());
+			
+			return userDao.save(up);
+			
+		}
+		
+		else
+			
+		 throw new UserException("User Not Found By This ID :"+ userId);
+		
+		
 	}
 
 	@Override
 	public User deleteUser(int userId) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+		
+Optional<User> update = userDao.findById(userId);
+		
+		if(update.isPresent()) {
+			
+			User up =  update.get();
+	        
+			userDao.delete(up);
+			
+			return up;
+	
+		}
+		
+		else
+			
+		 throw new UserException("User Not Found By This ID :"+ userId);
+		
 	}
 
 }

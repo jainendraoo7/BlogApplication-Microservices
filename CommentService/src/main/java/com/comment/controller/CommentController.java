@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.comment.entity.Comment;
 import com.comment.exception.CommentException;
+import com.comment.exception.UserException;
 import com.comment.service.CommentService;
 
 @RestController
@@ -62,6 +64,14 @@ public class CommentController {
 		
 	}
 	
+	@DeleteMapping("/delete/{blogId}/{commentId}")
+	public ResponseEntity<Comment> deleteCommentById(@PathVariable Integer blogId, @PathVariable Integer commentId) throws CommentException, UserException{
+		
+		Comment c1 = commentService.deleteComment(blogId, commentId);
+		
+		return new ResponseEntity<>(c1, HttpStatus.ACCEPTED);
+		
+	}
 	
 	
 }

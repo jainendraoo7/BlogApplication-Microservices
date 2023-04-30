@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.entity.Blogs;
 import com.blog.exception.BlogException;
+import com.blog.exception.UserException;
 import com.blog.service.BlogService;
 
 @RestController
@@ -51,6 +53,14 @@ public class BlogController {
 		
 	}
 	
+	@DeleteMapping("/delete/{userId}/{blogId}")
+	public ResponseEntity<Blogs> deleteBlogById(@PathVariable Integer blogId, @PathVariable Integer userId) throws BlogException, UserException{
+		
+		  Blogs b1 = blogService.deleteBlog(blogId, userId);
+		
+		  return new ResponseEntity<>(b1, HttpStatus.ACCEPTED);
+		  
+	}
 	
 	
 }

@@ -7,18 +7,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.user.entity.User;
 import com.user.exception.UserException;
 import com.user.service.UserService;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 
 @RestController
@@ -73,5 +75,24 @@ public class UserController {
 		return new ResponseEntity<>(user,HttpStatus.OK);
 		
 	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<User> userUpdateHandller(@RequestParam Integer userId, @RequestBody User user) throws UserException{
+		
+		User u1 = userService.updateUser(userId,user);
+		
+		return new ResponseEntity<>(u1,HttpStatus.ACCEPTED);
+		
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<User> userDeleteHandller(@PathVariable Integer userId) throws UserException{
+		
+		User u1 = userService.deleteUser(userId);
+		
+		return new ResponseEntity<>(u1,HttpStatus.ACCEPTED);
+		
+	}
+	
 	
 }

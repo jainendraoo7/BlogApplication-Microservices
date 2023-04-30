@@ -13,8 +13,9 @@ public interface UserService {
 	
     public User getUserById(int userId)throws UserException;
     
-	public User updateUser(int userId)throws UserException;
+	public User updateUser(int userId,User user)throws UserException;
 	
 	public User deleteUser(int userId)throws UserException;
+	
 	
 }
